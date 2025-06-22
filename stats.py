@@ -35,43 +35,68 @@ modifiers = [
     [10, 9], # 30
     ]
 
-stats = {
-    "lvl": 20,
-    "str": 9,
-    "dex": 12,
-    "con": 14,
-    "int": 18,
-    "wis": 11,
-    "chr": 12
-}
-
 def display_stats(stats):
     
     stats_display = []
-    stats_header = ["LVL", "STR", "DEX", "CON", "INT", "WIS", "CHR"]
+    stats_header = ["LVL", "INIT", "SPELL DC", "SPELL ATK", "STR", "DEX", "CON", "INT", "WIS", "CHR"]
     stats_display.append(stats_header)
-    stat_values = [str(value) for value in stats.values()]
+    stat_values = []
+    for stat in stats_header:
+        if stat == "INIT":
+            stat_values.append(modifiers[stats['dex']][abil_mod_idx])
+        elif stat == "SPELL DC":
+            stat_values.append(modifiers[stats['int']][abil_mod_idx] + modifiers[stats['lvl']][prof_idx] + 8)
+        elif stat == "SPELL ATK":
+            stat_values.append(modifiers[stats['int']][abil_mod_idx])
+        else:
+            stat_values.append(stats[stat.lower()])
+    widths = [len(item) + 2 for item in stats_header]
+    total_width = sum(widths)
+    stats_display.append("".join("'" for _ in range(total_width)))
     stats_display.append(stat_values)
-
-    for row in stats_display:
-        print("{:^5}{:^5}{:^5}{:^5}{:^5}{:^5}{:^5}".format(*row))
+    format_string = "".join(f"{{:^{w}}}" for w in widths)
+    for i, row in enumerate(stats_display):
+        if i == 1:
+            print(row)
+        else:
+            print(format_string.format(*row))
 
 def display_skill(stats):
     skill_display = []
+    # skill_header = {
+    #     "Acrobatics": "dex", 
+    #     "Animal_Handling": "wis", 
+    #     "Arcana": "int", 
+    #     "Athletics": "str", 
+    #     "Deception": "chr", 
+    #     "History": "int", 
+    #     "Insight": "wis", 
+    #     "Intimidation": "chr", 
+    #     "Investigation": "int", 
+    #     "Medicine": "wis", 
+    #     "Nature": "int", 
+    #     "Perception": "wis", 
+    #     "Performance": "chr", 
+    #     "Persuasion": "chr", 
+    #     "Religion": "int", 
+    #     "Sleight_of_Hand": "dex", 
+    #     "Stealth": "dex", 
+    #     "Survival": "wis"
+    # }
     skill_header = {
-        "Acrobatics": "dex", 
-        "Animal_Handling": "wis", 
+        "Acro": "dex", 
+        "Anim_Hand": "wis", 
         "Arcana": "int", 
-        "Athletics": "str", 
-        "Deception": "chr", 
+        "Athl": "str", 
+        "Decep": "chr", 
         "History": "int", 
         "Insight": "wis", 
-        "Intimidation": "chr", 
-        "Investigation": "int", 
+        "Intimi": "chr", 
+        "Invest": "int", 
         "Medicine": "wis", 
         "Nature": "int", 
-        "Perception": "wis", 
-        "Performance": "chr", 
+        "Percep": "wis", 
+        "Perform": "chr", 
         "Persuasion": "chr", 
         "Religion": "int", 
         "Sleight_of_Hand": "dex", 
@@ -80,22 +105,18 @@ def display_skill(stats):
     }
     skill_display.append(skill_header.keys())
     skill_mod_sources = skill_header.values()
+    widths = [len(item) + 2 for item in skill_header.keys()]
+    total_widths = sum(widths)
+    skill_display.append("".join("'" for _ in range(total_widths)))
     stat_values = [modifiers[stats[stat]][abil_mod_idx] + modifiers[stats['lvl']][prof_idx] for stat in skill_mod_sources]
     skill_display.append(stat_values)
+    format_string = "".join(f"{{:^{w}}}" for w in widths)
 
-    for row in skill_display:
-        display_string = ""
-        widths = [len(item) + 2 for item in skill_header.keys()]
-        format_string = "".join(f"{{:^{w}}}" for w in widths)
-        print(format_string.format(*row))
-
-display_skill(stats)
-display_stats(stats)
-
-
-string = "123456"
-
-print(len(string))
+    for i, row in enumerate(skill_display):
+        if i == 1:
+            print(row)
+        else:
+            print(format_string.format(*row))
 
 characteristics = """
 Darkvision. You can see in dim light within 120 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.
