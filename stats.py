@@ -78,7 +78,7 @@ def display_skill(stats):
         "Stealth": "dex", 
         "Survival": "wis"
     }
-    skill_display.append(skill_header)
+    skill_display.append(skill_header.keys())
     skill_mod_sources = skill_header.values()
     stat_values = [modifiers[stats[stat]][abil_mod_idx] + modifiers[stats['lvl']][prof_idx] for stat in skill_mod_sources]
     skill_display.append(stat_values)
