@@ -199,12 +199,12 @@ def details():
 def parse_arguments(inc_arguments):
     # idx 0 = command
     # idx 1 = spell name
-    arguments = inc_arguments.split(' ')
-    command = arguments[0].lower()
-    spell = arguments[2:]
-    print(spell)
-    if command == "details":
-        print(search_by(wizard_spells, spell))
+    # arguments = inc_arguments.split(' ')
+    # command = arguments[0].lower()
+    # spell = arguments[2:]
+    print(inc_arguments)
+    # if command == "details":
+    print(search_by(wizard_spells, inc_arguments))
 
 parse_arguments("details for magic missile")
 

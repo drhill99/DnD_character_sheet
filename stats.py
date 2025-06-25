@@ -43,11 +43,11 @@ def display_stats(stats):
     stat_values = []
     for stat in stats_header:
         if stat == "INIT":
-            stat_values.append(modifiers[stats['dex']][abil_mod_idx])
+            stat_values.append(modifiers[int(stats['dex'])][abil_mod_idx])
         elif stat == "SPELL DC":
-            stat_values.append(modifiers[stats['int']][abil_mod_idx] + modifiers[stats['lvl']][prof_idx] + 8)
+            stat_values.append(modifiers[int(stats['int'])][abil_mod_idx] + modifiers[int(stats['lvl'])][prof_idx] + 8)
         elif stat == "SPELL ATK":
-            stat_values.append(modifiers[stats['int']][abil_mod_idx])
+            stat_values.append(modifiers[int(stats['int'])][abil_mod_idx])
         else:
             stat_values.append(stats[stat.lower()])
     widths = [len(item) + 2 for item in stats_header]
@@ -108,7 +108,7 @@ def display_skill(stats):
     widths = [len(item) + 2 for item in skill_header.keys()]
     total_widths = sum(widths)
     skill_display.append("".join("'" for _ in range(total_widths)))
-    stat_values = [modifiers[stats[stat]][abil_mod_idx] + modifiers[stats['lvl']][prof_idx] for stat in skill_mod_sources]
+    stat_values = [modifiers[int(stats[stat])][abil_mod_idx] + modifiers[int(stats['lvl'])][prof_idx] for stat in skill_mod_sources]
     skill_display.append(stat_values)
     format_string = "".join(f"{{:^{w}}}" for w in widths)
 

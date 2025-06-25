@@ -14,10 +14,19 @@ quit = None
 
 
 while True:
-    user_command = input("enter a command: ")
-    utils.clear_terminal()
-    parse_arguments(user_command)
+    user_command = input(
+        """
+        display character 
+        load character
+        new character
+        spell <name>
+        quit
+        home
+        enter a command: 
+        """)
+    # utils.clear_terminal()
     if user_command.lower() == "quit":
+        utils.save_character(active_character)
         break
     elif user_command.lower() == "home":
         utils.clear_terminal()
@@ -26,8 +35,17 @@ while True:
         new_character = Character()
         if new_character is not None:
             active_character = new_character
+            utils.save_character(active_character)
+    elif user_command.lower().__contains__("spell"):
+        parse_arguments(user_command.split(' ')[1:])
     elif user_command.lower() == "load character":
-        utils.load_character()
+        active_character = utils.load_character()
+    elif user_command.lower() == "display character":
+        if active_character is not None:
+            print("Printing character")
+            print(active_character.stats)
+            active_character.print_character_sheet(active_character.stats)
+        
 if active_character is not None:
     utils.save_character(active_character)
 

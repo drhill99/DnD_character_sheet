@@ -58,6 +58,8 @@ def display_spell_table(stats):
         if i > stats['lvl']:
             break
 
+def prepared_spells(stats):
+    return spell_slots[int(stats['lvl'])][1]
 
 
 

@@ -17,5 +17,5 @@ def save_character(active_character):
 
 def load_character():
     char_to_load = input("Enter character name to load: ")
-    with open(f"{char_to_load}", "rb") as file:
+    with open(f"{char_to_load}.pkl", "rb") as file:
         return pickle.load(file)
